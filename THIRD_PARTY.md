@@ -9,9 +9,10 @@
 | [d3-geo](https://github.com/d3/d3-geo), [topojson-client](https://github.com/topojson/topojson-client) | npm | ISC | Map projection. |
 | [whisper.cpp](https://github.com/ggerganov/whisper.cpp) | installed by you | MIT | Speech recognition for QA and alignment. |
 | Apple Vision | macOS system framework | Apple SDK | Person segmentation for the text-behind effect (`scripts/personmask.swift`, compiled locally on first use; macOS only). |
+| [Breeze TTS 2](https://huggingface.co/BreezeBlue/Breeze-TTS-2) | optional external speech model; sample narration used a [community MLX port](https://huggingface.co/mlx-community/Breeze-TTS-2-mlx) | [BreezeBlue Research and Non-Commercial License](https://huggingface.co/BreezeBlue/Breeze-TTS-2/blob/main/LICENSE) | Model materials, derivatives and self-hosted outputs are for research/non-commercial use; inference code's Apache-2.0 does not grant commercial model rights. See [tool setup](docs/tools.md). |
 
 Services you connect with your own account / 需要你自己账号的服务:
-- Muse — 本分支通过用户现有应用/网页生成，额度、能力和素材条款以实际服务为准；不安装或连接上游远程生成 MCP。
+- [Muse by Meta](https://ai.meta.com/muse/) — 本分支通过用户现有应用/网页生成，额度、能力和素材条款以实际服务为准；[官方下载](https://ai.meta.com/muse/download/)。
 - [Xiaomi MiMo](https://platform.xiaomimimo.com/) — an independent optional TTS service; not integrated in this release. Use only voices you own or are licensed to use.
 
 Upstream research reports and demo visuals are not included in this community release. See the upstream repository for their descriptions and terms.

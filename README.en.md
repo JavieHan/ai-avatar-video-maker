@@ -1,69 +1,80 @@
 # AI Avatar Video Maker
 
-Generate continuous character footage in Muse, download it, then use local Whisper + TTS2 to correct the Mandarin narration and edit its timing to the existing mouth movement.
+**A semi-manual AI talking-head workflow with local helper scripts.** For creators who want continuous character footage from Muse and are comfortable reviewing clips and adjusting narration. You or a computer-using agent submits generation requests, reviews footage and chooses audio timings; the scripts extract frames, assemble clips, replace audio and prepare an editable project.
 
-[中文](README.md) · [Setup and commands (Chinese)](docs/usage.md) · [Agent Skill](skills/ai-avatar-video-maker/SKILL.md)
+[中文](README.md) · [Codex / Claude setup](docs/agent-setup.md) · [Tools and installation](docs/tools.md) · [Commands](docs/usage.md)
 
-## Two finished examples
+| External tool | What it is and where to get it |
+|---|---|
+| **Muse** | Meta's AI assistant, used here to generate short video clips. [Product](https://ai.meta.com/muse/) · [Download](https://ai.meta.com/muse/download/). Check that image-to-video generation is available to your account. |
+| **TTS2 / Breeze TTS 2** | A speech model for narration and voice cloning. [Official project](https://github.com/breezeblue-ai/breeze-tts) · [Community MLX port for Mac](https://huggingface.co/mlx-community/Breeze-TTS-2-mlx). Self-hosted models and outputs are restricted to research and non-commercial use; see the [model license](https://huggingface.co/BreezeBlue/Breeze-TTS-2/blob/main/LICENSE). |
 
-Click a poster to watch or download the complete video.
+## What you can make
 
-| Talking-head demo · 30 s | Elegant Xiao Ya · 27 s |
+Click a poster to watch or download the full MP4.
+
+| Everyday talking-head · 30 s | Period-style dialogue and movement · 27 s |
 |:---:|:---:|
-| [<img src="docs/demos/talking-head.jpg" width="250" alt="Watch the full 30-second talking-head sample">](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/talking-head-stickers.mp4) | [<img src="docs/demos/xiaoya.jpg" width="250" alt="Watch Xiao Ya speaking and dancing for 27 seconds">](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/xiaoya-elegant.mp4) |
-| Voice 6 · Captions · Yellow stickers | Voice 10 · Dialogue and dance · Guqin/guzheng |
+| [<img src="docs/demos/talking-head.jpg" width="250" alt="Watch the complete talking-head sample">](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/talking-head-stickers.mp4) | [<img src="docs/demos/xiaoya.jpg" width="250" alt="Watch the complete speaking and dancing sample">](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/xiaoya-elegant.mp4) |
+| Local narration · Captions · Yellow stickers | Narration · Standing and sleeve movement · Guqin/guzheng |
+
+## The whole workflow
+
+![Generate in Muse, use the retained last frame for the next clip, review and assemble locally, redub with Whisper and TTS2, add captions and graphics, export MP4 and an editable project](docs/guide/00-workflow.jpg)
+
+## Configure Codex / Claude Code
+
+Clone the repository, then run one command to register the project skill and check dependencies:
+
+```bash
+git clone https://github.com/JavieHan/ai-avatar-video-maker.git
+cd ai-avatar-video-maker
+bash setup.sh both
+```
+
+Open this directory in Codex or Claude Code, then start with **`$ai-avatar-video-maker`** or **`/ai-avatar-video-maker`**, respectively. See [setup details and a copyable prompt](docs/agent-setup.md).
+
+Run `sh skills/ai-avatar-video-maker/scripts/doctor.sh` to check the environment again. Setup reports missing dependencies; prepare your own Muse access, speech model and media.
 
 ## 1. Prepare the character and script
 
-Keep the face, clothing and setting consistent. Split speech into short phrases; for action scenes such as Xiao Ya's, plan speaking, standing and turning separately.
+Keep the face, clothing and setting consistent. Split speech into short phrases; plan dialogue, standing and turning in order when the character needs to move.
 
-![Planning diagram: short talking-head phrases versus dialogue followed by character actions](docs/guide/01-plan.jpg)
+![Plan short talking-head phrases or dialogue followed by character actions](docs/guide/01-plan.jpg)
 
-## 2. Generate a clip, then hand off its actual tail frame
+## 2. Generate clips and continue from the last retained frame
 
-Review the first clip and choose the cut. **Trim first, then extract the retained clip's last frame.** Upload that exact image with the next Muse request, asking it to continue the same pose, framing and lighting.
+Review a clip and select the outgoing cut. **Trim first, then extract the retained clip's last frame.** Upload that image to Muse with the next request, continuing the same character, pose, framing and lighting.
 
-![Actual early test: retain 173 frames from a 10-second clip, extract frame 172, upload the same PNG for the next request](docs/guide/02-handoff.jpg)
+![Extract frame 172 from a retained 173-frame clip and upload that PNG as the next image reference](docs/guide/02-handoff.jpg)
 
-The handoff figures use an earlier white-shirt test, not reconstructed cut points from the two final samples. An image reference does not guarantee a locked first frame.
+## 3. Check the join and assemble
 
-## 3. Review the join before assembling
+Compare the outgoing last frame with the incoming first frame, then play about one second on either side. Cut directly when the states match, remove repeated action, and keep the outgoing cut used for the reference. Arrange music or ambience continuously across the timeline.
 
-Compare the outgoing last frame with the generated first frame, then play roughly one second on either side. Check face scale, gaze, shoulders, clothing, props, background and lighting. Use a direct cut when they match; remove repeated action without replaying or holding the tail frame.
+![Compare face scale, shoulders, clothing, background and lighting, with a continuous audio track across the edit](docs/guide/03-join.jpg)
 
-![Actual tail/reference versus generated first frame, with alignment guides and a continuous audio timeline](docs/guide/03-join.jpg)
+## 4. Download and correct the Mandarin narration
 
-**Keep the same outgoing cut used to extract the reference.** If it changes, extract a new reference and review downstream clips. Also watch the complete next clip for character drift. Arrange music or ambience continuously across the timeline.
+Native Mandarin speech can contain wrong or unclear words or awkward pacing. Both samples retain the footage and replace the narration locally:
 
-## 4. Download, correct the Mandarin voice, and align its rhythm
+1. **Whisper finds timing:** locate phrases in the source audio, then refine speaking boundaries using the waveform and picture.
+2. **TTS2 reads the correct script:** generate the selected voice from your final text.
+3. **Edit to the mouth's rhythm:** split phrases, trim excess silence, adjust durations without changing pitch, and position each phrase at its speaking start while keeping pauses.
+4. **Replace audio and retime captions:** review against the final voice, then mix background music separately.
 
-**Muse's native Mandarin output in this production contained wrong or unclear words and unnatural pacing. Both finished samples therefore use replacement TTS2 narration.** After reviewing the footage:
+![Download, Whisper timing, TTS2 reading of the correct script, and actual waveforms before and after phrase alignment](docs/guide/04-voice.jpg)
 
-1. Download the video and extract its audio. Use `whisper-cli` for approximate phrase locations, then refine speech boundaries using the waveform and check them against the picture.
-2. Generate the **confirmed script** with external TTS2. ASR mistakes must not replace the intended words. The selected voices were auditions 6 and 10, not bundled presets.
-3. Split the new audio into phrases, remove excess silence, adjust each duration without changing pitch, and shift it to the corresponding speaking start while keeping pauses.
-4. Replace the Muse audio track, review caption timing against the final voice, and mix music separately.
-
-![Local redubbing: download, Whisper timing, TTS2 reading of the correct script, and actual waveforms before and after phrase alignment](docs/guide/04-voice.jpg)
-
-For the talking-head sample, a complete TTS recording was split into **12 phrases**. Its first speech starts around **0.85 s** in the 30-second export, not at zero. This edits audio timing to the existing mouth movement; it does not regenerate the mouth or guarantee phoneme-level synchronization after correcting words. See [the actual process and reusable commands (Chinese)](docs/redubbing.md).
+[Detailed redubbing process and commands →](docs/redubbing.md)
 
 ## 5. Finish and export
 
-The talking-head sample adds captions and yellow stickers. Xiao Ya keeps room for movement and pairs dialogue and dance with guqin/guzheng music. Watch the full export for caption errors, audio jumps, visible joins and flashes.
+Add captions and optional graphics to dialogue; leave room for arms and sleeves during movement. Watch the complete export for caption errors, audio issues, visible joins and flashes. Deliver an **MP4 and an editable Remotion project**.
 
-![Same-frame before and after talking-head packaging, alongside Xiao Ya speaking and dancing](docs/guide/05-finish.jpg)
+![Same-frame before and after packaging, alongside speaking and movement shots](docs/guide/05-finish.jpg)
 
-Deliver an **MP4 and an editable Remotion project**. These samples include manual editing and post-production; the base template does not reproduce every effect in one click. See [production notes and music credits](docs/demos/README.md).
-
-## Get started
-
-Requires Python 3, FFmpeg/FFprobe, whisper.cpp `whisper-cli` with a local model, Node.js 18+ and npm. TTS is optional and external; TTS2 is not bundled.
-
-[Setup and complete commands →](docs/usage.md)
-
-Generation happens in your own Muse interface. This repository prepares offline requests; it provides no Muse API/MCP and does not submit or pay for generation. Verify current duration limits, options and prices in Muse.
+Figures use sample screenshots and an earlier continuity test; see [sample notes and music credits](docs/demos/README.md). Reference images guide generation, while local dubbing adjusts audio timing and retains the existing mouth footage.
 
 ## Attribution and license
 
-Based on [andyhuo520/digital-human-koubo](https://github.com/andyhuo520/digital-human-koubo), reusing its caption timeline, some local scripts and Remotion packaging components, with added or adapted Muse handoff and dubbing workflows. See [Attribution and changes](ATTRIBUTION.md). The upstream [MIT license](LICENSE), [notice](NOTICE.md) and [third-party information](THIRD_PARTY.md) are retained. Media and third-party services have separate rights and terms.
+Based on [andyhuo520/digital-human-koubo](https://github.com/andyhuo520/digital-human-koubo), adapting its caption timeline, some local scripts and Remotion components. See [Attribution](ATTRIBUTION.md). Code retains the upstream [MIT license](LICENSE); external models, services and media have separate terms in [Third-party information](THIRD_PARTY.md).

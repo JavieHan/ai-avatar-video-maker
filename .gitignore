@@ -28,3 +28,10 @@ __pycache__/
 !docs/guide/03-join.jpg
 !docs/guide/04-voice.jpg
 !docs/guide/05-finish.jpg
+
+# Generated project skill registrations
+.agents/skills/ai-avatar-video-maker
+.claude/skills/ai-avatar-video-maker
+
+# Workflow overview
+!docs/guide/00-workflow.jpg

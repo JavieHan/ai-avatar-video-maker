@@ -4,7 +4,9 @@ description: 使用用户现有的 Muse 与本地 FFmpeg、whisper-cli、Remotio
 ---
 # 数字人口播 · Muse 社区版
 
-先阅读仓库 README 的图解和 `docs/usage.md` 的完整命令，确定用户的稿子、授权角色图片、声音选择与希望输出的形式。此版本基于上游 digital-human-koubo 代码改造，实际视频由用户或 Agent 在 Muse 界面提交生成；没有已验证的 Muse MCP / API，不猜测模型、价格、额度或音频驱动能力。
+先阅读仓库 README 的图解和 `docs/usage.md` 的命令，确定用户的稿子、授权角色图片、声音选择与希望输出的形式。工具身份与安装见 `docs/tools.md`；Muse 指 Meta 的 Muse，TTS2 指 Breeze TTS 2，后者自部署模型与输出有非商业用途限制。此版本基于上游 digital-human-koubo 代码改造，实际视频由用户或 Agent 在 Muse 界面提交生成；不猜测模型、价格、额度或音频驱动能力。
+
+通过 `bash setup.sh codex|claude|both` 接入后，从包含 `setup.sh` 的仓库根目录使用此技能。先运行 `scripts/doctor.sh`（相对此技能目录）检查依赖；将技能已接入、依赖就绪和实际生成/渲染成功分别报告。配置与使用入口见仓库 `docs/agent-setup.md`。
 
 ## 工作原则
 

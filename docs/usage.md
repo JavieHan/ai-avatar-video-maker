@@ -1,20 +1,26 @@
 # 安装与命令参考
 
-[返回首页图解](../README.md) · [Agent Skill](../skills/ai-avatar-video-maker/SKILL.md)
+[返回首页图解](../README.md) · [Codex / Claude 配置](agent-setup.md) · [工具安装入口](tools.md)
 
 ## 安装和准备
 
 在 macOS / Linux 的终端中运行；其他系统需要可用的 Python、FFmpeg、whisper.cpp 和 Node 环境。使用自己的 Muse 账号及有权使用的角色、声音和音乐。制作所需的原始人物图片、配音和片段由使用者准备；首页样稿另行授权展示，完整成片单独放在 Releases。
 
+可选的 `cutout_video.py` / `personmask.swift` 依赖 macOS Vision 与 Swift，**仅 macOS 可用**。它们不属于下面的基础口播流程，Linux 可正常执行基础剪接、配音替换和字幕包装。
+
 - Python 3、FFmpeg/FFprobe：准备请求、剪接、导入和换声。
 - [whisper.cpp](https://github.com/ggml-org/whisper.cpp) 的 `whisper-cli` 和一个本地模型：台词检查与时间轴；模型路径通过 `WHISPER_MODEL` 或 `--model` 指定。
 - Node.js 18+、npm：创建 Remotion 工程后安装其依赖并渲染；Remotion 使用条件见 [THIRD_PARTY.md](../THIRD_PARTY.md)。
-- 本机或其他渠道的 TTS 是**可选外部工具**。本项目不打包 TTS2，也不要求使用特定音色。
+- 本机或其他渠道的 TTS 是**可选外部工具**。文档中的 TTS2 指 Breeze TTS 2，安装入口及非商业许可见[工具说明](tools.md)。
+
+若已按配置指南克隆仓库，直接进入已有目录，从 `AVATAR_SKILL` 一行开始；另选一个空工作目录保存自己的项目。
 
 ```bash
 git clone https://github.com/JavieHan/ai-avatar-video-maker.git
 cd ai-avatar-video-maker
 AVATAR_SKILL="$PWD/skills/ai-avatar-video-maker"
+export WHISPER_MODEL="<你的本地 Whisper 模型完整路径>"
+sh "$AVATAR_SKILL/scripts/doctor.sh"
 mkdir -p work/demo/downloads work/demo/kept
 cp examples/persona.json examples/script.json work/demo/
 cd work/demo

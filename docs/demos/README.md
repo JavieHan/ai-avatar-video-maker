@@ -28,6 +28,8 @@ The code's MIT license does not grant rights to reuse sample characters, voices,
 - `02-handoff.jpg`、`03-join.jpg`：白衬衫角色的早期真实接力测试。第一段原片 10 秒，实际保留 173 帧 / 30 fps；从保留片导出的末帧为 F172，PTS 5.733333 秒。此图确实作为第二段的图片参考；对照图右侧是该次生成的第二段 F0。它没有硬首帧锁定证据，第二段声音曾因错词或含糊未通过用户验收。
 - 这些早期测试帧只用于解释取尾帧、上传与接点检查，不能当作两条公开成片的真实分段或剪点记录。两条成片的原始 Muse 分段记录未随项目提供；不把 10 秒、20 秒猜作它们的生成接点。
 - `04-voice.jpg`：三条曲线分别来自白衬衫 30 秒倍速版的 Muse 原声、6 号完整原始 TTS2 配音、V4 工程的最终人声音轨，均显示各自开头 4.5 秒。图中约 0.85 秒和 2.52 秒为成片前两个短语的发声起点；它说明短句对齐，不代表已验证逐音素口型。实际原速/倍速区间与操作见[本地重配指南](../redubbing.md)。
-- `05-finish.jpg`：白衬衫包装前、后都是 11 秒的对应帧；小雅为公开 V3 的 8 秒口播、23 秒动作帧。
+- `05-finish.jpg`：白衬衫包装前、后都是 F500 / 16.666667 秒的对应帧；小雅为公开 V3 的 8 秒口播、23 秒动作帧。
 
 The handoff comparison is a real earlier test of the same white-shirt character, not a claimed reconstruction of either sample's generation history. Other figures use final-sample screenshots, the corresponding unwrapped footage and the final voice track. Diagrams are explanations, not Muse interface screenshots or proof of locked-frame generation.
+
+封面更新为白衬衫成片 F500 / 16.666667 秒，字幕显示完整的“花字和图表”；未修改或重新上传视频。`00-workflow.jpg` 是总流程示意图。
