@@ -1,34 +1,64 @@
 # AI Avatar Video Maker
 
-A community adaptation of [andyhuo520/digital-human-koubo](https://github.com/andyhuo520/digital-human-koubo): plan short talking-head clips, use Muse through its actual interface, select a cut, extract the last frame, use it as the next image reference, and finish the result locally with Whisper and Remotion.
+Turn a character image and a script into short Muse clips, then edit, dub, caption and finish the video locally.
 
-[完整中文指南 / Full Chinese guide](README.md) · [Attribution and changes](ATTRIBUTION.md)
+[中文](README.md) · [Setup and commands (Chinese)](docs/usage.md) · [Agent Skill](skills/ai-avatar-video-maker/SKILL.md)
 
-**Scope:** This repository does not contain a Muse API, model weights, TTS2, account, upstream demo presenter or users’ production assets. The two sample exports below are separately approved for public display and hosted in Releases. Request preparation is offline; you or a computer-using agent must actually upload each image and generate/download each clip in Muse. Check your current Muse duration limits, capabilities, credit balance and prices before submitting. A tail image is a reference, not a guaranteed locked first frame. Later voice replacement does not drive lip movement.
+## Two finished examples
 
-## Video samples
-
-Click a poster to watch or download the complete MP4. These maintainer-approved finished samples include manual editing and external TTS; see [production notes and music credits](docs/demos/README.md).
+Click a poster to watch or download the complete video.
 
 | Talking-head demo · 30 s | Elegant Xiao Ya · 27 s |
 |:---:|:---:|
-| [<img src="docs/demos/talking-head.jpg" width="250" alt="Talking-head sample with captions and stickers">](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/talking-head-stickers.mp4) | [<img src="docs/demos/xiaoya.jpg" width="250" alt="Elegant Xiao Ya speaking and dancing">](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/xiaoya-elegant.mp4) |
-| [▶ Watch / download](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/talking-head-stickers.mp4) · Captions, stickers and dubbed voice | [▶ Watch / download](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/xiaoya-elegant.mp4) · Dialogue, dance and guqin/guzheng music |
+| [<img src="docs/demos/talking-head.jpg" width="250" alt="Watch the full 30-second talking-head sample">](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/talking-head-stickers.mp4) | [<img src="docs/demos/xiaoya.jpg" width="250" alt="Watch Xiao Ya speaking and dancing for 27 seconds">](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/xiaoya-elegant.mp4) |
+| Voice 6 · Captions · Yellow stickers | Voice 10 · Dialogue and dance · Guqin/guzheng |
 
-## Requirements
+## 1. Prepare the character and script
 
-Python 3, FFmpeg/FFprobe, whisper.cpp `whisper-cli` and a local model, Node.js 18+, and npm. Use faces, voices, and music you are entitled to use. Remotion has separate license terms: see [THIRD_PARTY.md](THIRD_PARTY.md).
+Keep the face, clothing and setting consistent. Split speech into short phrases; for action scenes such as Xiao Ya's, plan speaking, standing and turning separately.
 
-## Workflow
+![Planning diagram: short talking-head phrases versus dialogue followed by character actions](docs/guide/01-plan.jpg)
 
-1. Copy `examples/persona.json` and `examples/script.json` to a private work directory. Add your own `portrait.png` and edit the script and voice description. Run `build_tasks.py` to prepare local prompts.
-2. Generate the first clip in Muse. Review speech and expression, choose the cut, then run `handoff.py` to create a trimmed clip, its actual last frame and a new task list bound to the image. Upload that image with the next prompt and repeat. Review all joins.
-3. Create `results.json` from the real downloaded clips; run `import_muse.py`. After actually watching and listening, set each approved clip to `approved`. Run `assemble.py` with `--keep-frames` for the retained cuts and `align.py` to create `tl.json`. Whisper similarity is not a substitute for listening or lip-sync review.
-4. Optionally place external, separately generated phrase audio using `timed_voice.py` and manually chosen start times. Review the replacement voice and subtitle timing; mouth movement is unchanged.
-5. Run `prepare_edit.py --video main.mp4 --timeline tl.json --output community-edit`. In the new project run `npm install --no-audit --no-fund` followed by `bash scripts/render.sh ../finished.mp4`. Optional custom stickers, audio and music are documented in the Chinese guide. The finished MP4 and the new Remotion project are separate deliverables.
+## 2. Generate a clip, then hand off its actual tail frame
 
-The complete copyable commands and example JSON are in [README.md](README.md). The local scripts do not upload, charge, or automatically retry. The cut, export, and render tools refuse to overwrite existing targets. Review the full output, including joins, captions, audio, and possible rendering artifacts.
+Review the first clip and choose the cut. **Trim first, then extract the retained clip's last frame.** Upload that exact image with the next Muse request, asking it to continue the same pose, framing and lighting.
 
-## License and attribution
+![Actual early test: retain 173 frames from a 10-second clip, extract frame 172, upload the same PNG for the next request](docs/guide/02-handoff.jpg)
 
-Derived from [digital-human-koubo](https://github.com/andyhuo520/digital-human-koubo), with its [MIT license](LICENSE), [notice](NOTICE.md), and [third-party information](THIRD_PARTY.md) retained. The original author's demonstration images and videos are not included. Third-party services and media have their own terms.
+The handoff figures use an earlier white-shirt test, not reconstructed cut points from the two final samples. An image reference does not guarantee a locked first frame.
+
+## 3. Review the join before assembling
+
+Compare the outgoing last frame with the generated first frame, then play roughly one second on either side. Check face scale, gaze, shoulders, clothing, props, background and lighting. Use a direct cut when they match; remove repeated action without replaying or holding the tail frame.
+
+![Actual tail/reference versus generated first frame, with alignment guides and a continuous audio timeline](docs/guide/03-join.jpg)
+
+**Keep the same outgoing cut used to extract the reference.** If it changes, extract a new reference and review downstream clips. Also watch the complete next clip for character drift. Arrange music or ambience continuously across the timeline.
+
+## 4. Align the selected voice and captions
+
+These samples use voices selected from TTS2 auditions 6 and 10; the voices are not bundled. Audition first, generate the confirmed script in short phrases, and place audio at the character's actual speaking starts and pauses. `whisper-cli` assists with caption timing.
+
+![Actual final voice waveform: the first phrase starts around 0.85 seconds and the next around 2.52 seconds](docs/guide/04-voice.jpg)
+
+Dubbing does not change mouth movement. Use the correct script for captions and review their timing against the final audio.
+
+## 5. Finish and export
+
+The talking-head sample adds captions and yellow stickers. Xiao Ya keeps room for movement and pairs dialogue and dance with guqin/guzheng music. Watch the full export for caption errors, audio jumps, visible joins and flashes.
+
+![Same-frame before and after talking-head packaging, alongside Xiao Ya speaking and dancing](docs/guide/05-finish.jpg)
+
+Deliver an **MP4 and an editable Remotion project**. These samples include manual editing and post-production; the base template does not reproduce every effect in one click. See [production notes and music credits](docs/demos/README.md).
+
+## Get started
+
+Requires Python 3, FFmpeg/FFprobe, whisper.cpp `whisper-cli` with a local model, Node.js 18+ and npm. TTS is optional and external; TTS2 is not bundled.
+
+[Setup and complete commands →](docs/usage.md)
+
+Generation happens in your own Muse interface. This repository prepares offline requests; it provides no Muse API/MCP and does not submit or pay for generation. Verify current duration limits, options and prices in Muse.
+
+## Attribution and license
+
+Based on [andyhuo520/digital-human-koubo](https://github.com/andyhuo520/digital-human-koubo), reusing its caption timeline, some local scripts and Remotion packaging components, with added or adapted Muse handoff and dubbing workflows. See [Attribution and changes](ATTRIBUTION.md). The upstream [MIT license](LICENSE), [notice](NOTICE.md) and [third-party information](THIRD_PARTY.md) are retained. Media and third-party services have separate rights and terms.

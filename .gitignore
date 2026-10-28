@@ -20,6 +20,11 @@ __pycache__/
 *.jpeg
 *.webp
 
-# Explicitly approved README demo posters
+# Approved demo posters and illustrated walkthrough
 !docs/demos/talking-head.jpg
 !docs/demos/xiaoya.jpg
+!docs/guide/01-plan.jpg
+!docs/guide/02-handoff.jpg
+!docs/guide/03-join.jpg
+!docs/guide/04-voice.jpg
+!docs/guide/05-finish.jpg
