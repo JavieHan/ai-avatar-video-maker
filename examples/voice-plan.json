@@ -1,0 +1,6 @@
+{
+  "phrases": [
+    {"audio": "phrase-01.wav", "at": 1.0, "rate": 1.0},
+    {"audio": "phrase-02.wav", "at": 5.0, "rate": 1.0}
+  ]
+}

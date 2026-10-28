@@ -1,0 +1,8 @@
+{
+  "name": "我的数字人",
+  "reference_image": "portrait.png",
+  "ratio": "9:16",
+  "voice": {"description": "自然、清晰的普通话"},
+  "generation": {"provider": "muse", "max_requested_seconds": 10},
+  "other_hosts": {}
+}

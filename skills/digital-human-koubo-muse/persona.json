@@ -1,0 +1,19 @@
+{
+  "name": null,
+  "reference_image": null,
+  "ratio": "9:16",
+  "voice": {
+    "description": null,
+    "note": "由用户明确选择声音方向；本文件不提供默认克隆音色。"
+  },
+  "generation": {
+    "provider": "muse",
+    "transport": "native-ui",
+    "model": null,
+    "max_requested_seconds": 10,
+    "speech_capability_verified": false,
+    "note": "10秒仅为初始分段规划，沿用现有 Muse 短片工作方式；生成前核实实际可用时长、口播和额度。"
+  },
+  "other_hosts": {},
+  "disclosure": "内容由 AI 数字人演绎"
+}

@@ -1,0 +1,12 @@
+{
+  "width": 720,
+  "height": 1280,
+  "fps": 30,
+  "duration": 1,
+  "video": "main.mp4",
+  "voice": null,
+  "music": null,
+  "musicVolume": 0.12,
+  "badge": null,
+  "stickers": []
+}
