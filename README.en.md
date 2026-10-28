@@ -56,6 +56,8 @@ Compare the outgoing last frame with the incoming first frame, then play about o
 
 ## 4. Download and correct the Mandarin narration
 
+> **Commercial narration requires appropriate rights:** Breeze TTS 2 weights and self-hosted audio outputs are limited to research and non-commercial use. Commercial use requires a separate written license from BreezeBlue; see the [model license](https://huggingface.co/BreezeBlue/Breeze-TTS-2/blob/main/LICENSE). For client work, product promotion or company videos, use a TTS licensed for that purpose or recordings you are entitled to use. The same alignment and editing steps apply.
+
 Native Mandarin speech can contain wrong or unclear words or awkward pacing. Both samples retain the footage and replace the narration locally:
 
 1. **Whisper finds timing:** locate phrases in the source audio, then refine speaking boundaries using the waveform and picture.
