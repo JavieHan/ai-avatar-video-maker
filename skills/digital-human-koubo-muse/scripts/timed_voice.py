@@ -68,12 +68,14 @@ def main():
     cmd = ['ffmpeg', '-v', 'error', '-n', '-i', str(video)]
     for source, _, _, _ in pieces:
         cmd.extend(['-i', str(source)])
-    filters = []
+    # A duration-matched silent base drives the mixer throughout the full video.
+    # This also prevents older FFmpeg versions from ending before delayed inputs.
+    filters = [f'anullsrc=r=48000:cl=stereo,atrim=duration={duration:.6f},asetpts=PTS-STARTPTS[base]']
     for i, (_, at, rate, _) in enumerate(pieces, 1):
         delay = round(at * 1000)
         filters.append(f'[{i}:a]atempo={rate:.6f},aresample=48000,aformat=sample_fmts=fltp:channel_layouts=stereo,asetpts=PTS-STARTPTS,adelay={delay}:all=1[a{i}]')
-    filters.append(''.join(f'[a{i}]' for i in range(1, len(pieces)+1)) +
-                   f'amix=inputs={len(pieces)}:duration=longest:normalize=0,apad,atrim=duration={duration:.6f}[aout]')
+    filters.append('[base]' + ''.join(f'[a{i}]' for i in range(1, len(pieces)+1)) +
+                   f'amix=inputs={len(pieces)+1}:duration=first:normalize=0,atrim=duration={duration:.6f}[aout]')
     with tempfile.TemporaryDirectory(prefix='.timed-voice-', dir=args.out.parent) as directory:
         staged = Path(directory) / 'result.mp4'
         cmd.extend(['-filter_complex', ';'.join(filters), '-map', '0:v:0', '-map', '[aout]',

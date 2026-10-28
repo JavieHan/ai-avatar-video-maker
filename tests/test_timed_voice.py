@@ -40,6 +40,9 @@ class TimedVoiceTest(unittest.TestCase):
             return sum(abs(v) for v in window)/max(1,len(window))
         energies = [round(energy(x), 2) for x in (.2, .7, 1.2, 1.7, 2.2, 2.7)]
         print('synthetic audio seconds:', len(samples)/48000, 'window energies:', energies)
+        if len(samples) < 2.8 * 48000:
+            info = subprocess.run(['ffprobe','-v','error','-show_entries','stream=codec_type,duration:format=duration','-of','json',str(out)],capture_output=True,text=True,check=True).stdout
+            print('short output diagnostic:', info)
         self.assertLess(energy(.2), 50)
         self.assertGreater(energy(.7), 1000)
         self.assertLess(energy(1.2), 50)
