@@ -1,5 +1,7 @@
 # Notice / 说明
 
+## Upstream notice / 上游说明
+
 The MIT license (LICENSE) covers the code and documentation in this repository.
 The demo videos, presenter images (assets/avatar_ref.jpg, docs/*, style previews and
 the packaging gallery) depict the author's own AI digital humans and are provided for
@@ -9,3 +11,7 @@ in your own content. See THIRD_PARTY.md for bundled third-party assets.
 MIT 协议只覆盖本仓库的代码和文档。示例视频、主播形象图、风格预览图和包装图鉴里的人物都是作者自己的 AI 数字人，仅作演示：不要当成你自己的作品重新上传，也不要在你的内容里使用这些主播的形象。第三方组件见 THIRD_PARTY.md。
 
 本 Muse 适配发布版不包含上述上游示例视频、主播图片、风格截图或包装图鉴；如需查看示例，请访问上游仓库。
+
+## 本项目样稿 / This project’s samples
+
+首页新增的两条样稿由本项目维护者提供并授权展示，与上游示例素材不同。成片中人物、声音和第三方配乐不自动受代码 MIT 许可覆盖；见 [样稿说明与配乐署名](docs/demos/README.md)。

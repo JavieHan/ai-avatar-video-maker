@@ -8,6 +8,15 @@
 
 **生成需要自行使用 Muse。** 本项目不提供或调用 Muse API/MCP，不代付、不自动提交生成请求；模型、单次时长、费用和额度以你的 Muse 界面显示为准。可以手动操作，也可以请有电脑操作能力的 Agent 协助。`build_tasks.py` 仅生成本地请求，不会生成视频或扣费。
 
+## 样稿
+
+点击封面或链接观看 / 下载完整 MP4。这两条成片由维护者提供并授权展示，包含人工剪辑与后期配音；[制作说明与配乐署名](docs/demos/README.md)。
+
+| 白衬衫口播 · 30 秒 | 小雅优雅版 · 27 秒 |
+|:---:|:---:|
+| [<img src="docs/demos/talking-head.jpg" width="250" alt="白衬衫数字人口播样稿">](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/talking-head-stickers.mp4) | [<img src="docs/demos/xiaoya.jpg" width="250" alt="小雅优雅版口播与舞蹈样稿">](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/xiaoya-elegant.mp4) |
+| [▶ 观看 / 下载](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/talking-head-stickers.mp4) · 字幕、暖黄贴纸、6 号配音 | [▶ 观看 / 下载](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/xiaoya-elegant.mp4) · 口播、舞蹈、10 号配音、古琴古筝 |
+
 ## 这套流程能做什么
 
 1. 用已授权角色图和稿子离线准备每段请求。以单段 10 秒为默认规划，先确认你当前 Muse 的实际限制。
@@ -19,7 +28,7 @@
 
 ## 安装和准备
 
-在 macOS / Linux 的终端中运行；其他系统需要可用的 Python、FFmpeg、whisper.cpp 和 Node 环境。使用自己的 Muse 账号及有权使用的角色、声音和音乐。本仓库不包含人物、语音、生成片段或上游演示图。
+在 macOS / Linux 的终端中运行；其他系统需要可用的 Python、FFmpeg、whisper.cpp 和 Node 环境。使用自己的 Muse 账号及有权使用的角色、声音和音乐。制作所需的原始人物图片、配音和片段由使用者准备；首页样稿另行授权展示，完整成片单独放在 Releases。
 
 - Python 3、FFmpeg/FFprobe：准备请求、剪接、导入和换声。
 - [whisper.cpp](https://github.com/ggml-org/whisper.cpp) 的 `whisper-cli` 和一个本地模型：台词检查与时间轴；模型路径通过 `WHISPER_MODEL` 或 `--model` 指定。
@@ -117,4 +126,4 @@ bash scripts/render.sh ../finished.mp4
 
 ## 许可与来源
 
-本项目基于 [digital-human-koubo](https://github.com/andyhuo520/digital-human-koubo)，保留上游 [MIT LICENSE](LICENSE)、[NOTICE.md](NOTICE.md) 和 [THIRD_PARTY.md](THIRD_PARTY.md)。本发行版刻意不包含上游作者的示例主播、展示图片和视频，也不包含任何使用者的生成素材。代码许可不自动授予第三方服务、模型、音乐或人物形象的使用权；Remotion 等依赖有独立使用条款。
+本项目基于 [digital-human-koubo](https://github.com/andyhuo520/digital-human-koubo)，保留上游 [MIT LICENSE](LICENSE)、[NOTICE.md](NOTICE.md) 和 [THIRD_PARTY.md](THIRD_PARTY.md)。本发行版刻意不包含上游作者的示例主播、展示图片和视频，除首页明确授权展示的样稿外，不包含使用者的制作素材。代码许可不自动授予第三方服务、模型、音乐或人物形象的使用权；Remotion 等依赖有独立使用条款。

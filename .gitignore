@@ -19,3 +19,7 @@ __pycache__/
 *.jpg
 *.jpeg
 *.webp
+
+# Explicitly approved README demo posters
+!docs/demos/talking-head.jpg
+!docs/demos/xiaoya.jpg

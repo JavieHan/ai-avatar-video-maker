@@ -19,3 +19,5 @@ Upstream research reports and demo visuals are not included in this community re
 本发行版保留部分上游包装组件源码，但默认工程仅安装基础渲染依赖；自行接入其他组件时，应自行核对并安装各组件所需依赖及其许可。
 
 `templates/huazi-916/public/emoji/` 还保留了来自上游仓库的静态 SVG 表情；其具体来源及适用许可尚未逐一核实。默认基础口播工程不使用这些 SVG；如需在自己的作品中使用，请先核对来源和许可。动态 JSON 的 CC BY 4.0 说明不应自动套用到这些静态文件。
+
+首页样稿的配乐来源、作者、许可和修改方式见 [样稿配乐署名](docs/demos/README.md#配乐来源--music-credits)。

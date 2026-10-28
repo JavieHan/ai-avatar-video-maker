@@ -4,7 +4,16 @@ A community adaptation of [andyhuo520/digital-human-koubo](https://github.com/an
 
 [完整中文指南 / Full Chinese guide](README.md) · [Attribution and changes](ATTRIBUTION.md)
 
-**Scope:** This repository does not contain a Muse API, model weights, TTS2, account, demo presenter, or user media. Request preparation is offline; you or a computer-using agent must actually upload each image and generate/download each clip in Muse. Check your current Muse duration limits, capabilities, credit balance and prices before submitting. A tail image is a reference, not a guaranteed locked first frame. Later voice replacement does not drive lip movement.
+**Scope:** This repository does not contain a Muse API, model weights, TTS2, account, upstream demo presenter or users’ production assets. The two sample exports below are separately approved for public display and hosted in Releases. Request preparation is offline; you or a computer-using agent must actually upload each image and generate/download each clip in Muse. Check your current Muse duration limits, capabilities, credit balance and prices before submitting. A tail image is a reference, not a guaranteed locked first frame. Later voice replacement does not drive lip movement.
+
+## Video samples
+
+Click a poster to watch or download the complete MP4. These maintainer-approved finished samples include manual editing and external TTS; see [production notes and music credits](docs/demos/README.md).
+
+| Talking-head demo · 30 s | Elegant Xiao Ya · 27 s |
+|:---:|:---:|
+| [<img src="docs/demos/talking-head.jpg" width="250" alt="Talking-head sample with captions and stickers">](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/talking-head-stickers.mp4) | [<img src="docs/demos/xiaoya.jpg" width="250" alt="Elegant Xiao Ya speaking and dancing">](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/xiaoya-elegant.mp4) |
+| [▶ Watch / download](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/talking-head-stickers.mp4) · Captions, stickers and dubbed voice | [▶ Watch / download](https://github.com/JavieHan/ai-avatar-video-maker/releases/download/samples-v1/xiaoya-elegant.mp4) · Dialogue, dance and guqin/guzheng music |
 
 ## Requirements
 

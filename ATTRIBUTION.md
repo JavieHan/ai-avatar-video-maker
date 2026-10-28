@@ -20,6 +20,6 @@ This edition adds or adapts the offline Muse workflow, reviewed tail-frame hando
 
 ## 许可和示例 / License and media
 
-上游代码和文档的 [MIT LICENSE](LICENSE) 与 [NOTICE.md](NOTICE.md) 保留原作者署名。本发行版不包含原作者的示例主播照片、展示图、演示视频，也不包含本次使用者的人像、声音或视频。第三方依赖与外部服务有各自条款，代码的 MIT 许可不替代这些条款。
+上游代码和文档的 [MIT LICENSE](LICENSE) 与 [NOTICE.md](NOTICE.md) 保留原作者署名。本发行版不包含原作者的示例主播照片、展示图、演示视频，不包含使用者的制作过程原始素材或私有账户资料；首页单独列出的样稿为维护者明确授权展示的成片，见 [样稿说明](docs/demos/README.md)。第三方依赖与外部服务有各自条款，代码的 MIT 许可不替代这些条款。
 
-The upstream [MIT license](LICENSE) and [notice](NOTICE.md) retain the original copyright. Upstream demo presenters, pictures and videos, and this user's media are not included. External dependencies, services and media have their own terms.
+The upstream [MIT license](LICENSE) and [notice](NOTICE.md) retain the original copyright. Upstream demo presenters, pictures and videos, and users' production assets are not included. The separately approved finished samples are documented in [sample notes](docs/demos/README.md). External dependencies, services and media have their own terms.
