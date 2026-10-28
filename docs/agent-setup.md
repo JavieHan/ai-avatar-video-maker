@@ -53,4 +53,4 @@ bash setup.sh both
 请先检查环境，给出分段稿和第一段请求，按 README 的图解流程推进。
 ```
 
-其他能读取本地文件、执行命令的 Agent，可以直接读取 `skills/ai-avatar-video-maker/SKILL.md`。生成视频与审片仍需要实际操作 Muse；自动接入技能不等于自动完成整条成片。
+其他能读取本地文件、执行命令的 Agent，可以直接读取 `skills/ai-avatar-video-maker/SKILL.md`。具备电脑操作能力的 Agent 可以完成 Muse 提交与下载，本地脚本执行后期处理；你负责审看和关键确认。

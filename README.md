@@ -1,6 +1,6 @@
 # AI Avatar Video Maker
 
-**一套半手工的 AI 口播制作流程与本地辅助脚本。** 适合想用 Muse 做连续人物视频、愿意逐段审看和调整配音的创作者。你或能操作电脑的 Agent 负责提交生成、审片和确认配音时间，脚本负责取尾帧、剪接、换声和输出可编辑工程。
+**一套由你把关、Agent 和脚本执行的 AI 口播制作流程。** 适合想用 Muse 制作连续人物视频、希望掌控人物、台词和声音效果的创作者。具备电脑操作能力的 Agent 可以完成 Muse 提交与下载，本地脚本负责取尾帧、剪接、换声、字幕和工程导出；你负责审看与关键确认。
 
 [English](README.en.md) · [Codex / Claude 配置](docs/agent-setup.md) · [工具与安装](docs/tools.md) · [完整命令](docs/usage.md)
 

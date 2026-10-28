@@ -1,6 +1,6 @@
 # AI Avatar Video Maker
 
-**A semi-manual AI talking-head workflow with local helper scripts.** For creators who want continuous character footage from Muse and are comfortable reviewing clips and adjusting narration. You or a computer-using agent submits generation requests, reviews footage and chooses audio timings; the scripts extract frames, assemble clips, replace audio and prepare an editable project.
+**An AI talking-head workflow powered by agents and scripts, with you in control.** For creators who want continuous character videos from Muse and control over the character, script and voice. A computer-using agent can submit Muse requests and download clips; local scripts extract frames, assemble footage, replace narration, add captions and export an editable project. You review the results and approve key decisions.
 
 [中文](README.md) · [Codex / Claude setup](docs/agent-setup.md) · [Tools and installation](docs/tools.md) · [Commands](docs/usage.md)
 
