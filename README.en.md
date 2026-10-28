@@ -1,6 +1,6 @@
 # AI Avatar Video Maker
 
-Turn a character image and a script into short Muse clips, then edit, dub, caption and finish the video locally.
+Generate continuous character footage in Muse, download it, then use local Whisper + TTS2 to correct the Mandarin narration and edit its timing to the existing mouth movement.
 
 [中文](README.md) · [Setup and commands (Chinese)](docs/usage.md) · [Agent Skill](skills/ai-avatar-video-maker/SKILL.md)
 
@@ -35,13 +35,18 @@ Compare the outgoing last frame with the generated first frame, then play roughl
 
 **Keep the same outgoing cut used to extract the reference.** If it changes, extract a new reference and review downstream clips. Also watch the complete next clip for character drift. Arrange music or ambience continuously across the timeline.
 
-## 4. Align the selected voice and captions
+## 4. Download, correct the Mandarin voice, and align its rhythm
 
-These samples use voices selected from TTS2 auditions 6 and 10; the voices are not bundled. Audition first, generate the confirmed script in short phrases, and place audio at the character's actual speaking starts and pauses. `whisper-cli` assists with caption timing.
+**Muse's native Mandarin output in this production contained wrong or unclear words and unnatural pacing. Both finished samples therefore use replacement TTS2 narration.** After reviewing the footage:
 
-![Actual final voice waveform: the first phrase starts around 0.85 seconds and the next around 2.52 seconds](docs/guide/04-voice.jpg)
+1. Download the video and extract its audio. Use `whisper-cli` for approximate phrase locations, then refine speech boundaries using the waveform and check them against the picture.
+2. Generate the **confirmed script** with external TTS2. ASR mistakes must not replace the intended words. The selected voices were auditions 6 and 10, not bundled presets.
+3. Split the new audio into phrases, remove excess silence, adjust each duration without changing pitch, and shift it to the corresponding speaking start while keeping pauses.
+4. Replace the Muse audio track, review caption timing against the final voice, and mix music separately.
 
-Dubbing does not change mouth movement. Use the correct script for captions and review their timing against the final audio.
+![Local redubbing: download, Whisper timing, TTS2 reading of the correct script, and actual waveforms before and after phrase alignment](docs/guide/04-voice.jpg)
+
+For the talking-head sample, a complete TTS recording was split into **12 phrases**. Its first speech starts around **0.85 s** in the 30-second export, not at zero. This edits audio timing to the existing mouth movement; it does not regenerate the mouth or guarantee phoneme-level synchronization after correcting words. See [the actual process and reusable commands (Chinese)](docs/redubbing.md).
 
 ## 5. Finish and export
 

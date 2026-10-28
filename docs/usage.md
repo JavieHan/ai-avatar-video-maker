@@ -74,9 +74,11 @@ python3 "$AVATAR_SKILL/scripts/align.py" script.json --cut-dir cut --out tl.json
 
 识别与原稿相似度低时会暂停。实际听审后，如果仅是识别误差，使用 `--accept-asr-mismatch s2 --review-note "实际复核依据"`；如果原声确实有错且准备后期换声，用 `--accept-spoken-error s2 --review-note "实际复核依据"`。两者都不会标记口型通过。重跑请换用全新 `--out` 和 `--cut-dir`，不会覆盖已有成片或缓存。
 
-## 4. 可选：替换配音
+## 4. 本地修正中文配音（两条样稿采用）
 
-可以用 TTS2、其他 TTS 或自己录制的声音，**先把配音分成短句并人工确定各句的发声时间**。在当前工作目录复制[配音计划示例](../examples/voice-plan.json)：
+本次 Muse 中文出现过错词或含糊，因此两条样稿下载到本地后，使用 Whisper 辅助找时间、TTS2 按确认稿重配，再按短句对齐口型节奏。完整操作见[本地重配图解与命令](redubbing.md)。
+
+先生成正确稿的配音，再切成短句并确定每句发声时间；也可逐句生成并保持同一声音参考。在当前工作目录复制[配音计划示例](../examples/voice-plan.json)：
 
 ```bash
 cp "$AVATAR_SKILL/../../examples/voice-plan.json" voice-plan.json
@@ -88,16 +90,16 @@ cp "$AVATAR_SKILL/../../examples/voice-plan.json" voice-plan.json
 python3 "$AVATAR_SKILL/scripts/timed_voice.py" main.mp4 voice-plan.json --out main-redub.mp4
 ```
 
-这一步保留视频画面、替换原音，不会自动识别或保证准确的口型同步，也不会自动保留原视频的背景声。时间重叠、超出片长或输出已存在时会停止。请听审，并根据实际新配音复核 `tl.json` 的时间；原音生成的字幕时间不一定适用于新声音。
+这一步保留视频画面、替换原音，不会自动识别或保证准确的口型同步，也不会自动保留原视频的背景声。时间重叠、超出片长或输出已存在时会停止。请听审，并根据实际新配音复核 `tl.json` 的时间；原音生成的字幕时间不一定适用于新声音。如果 Muse 原声清楚且决定沿用，可以跳过重配，下一步使用 `main.mp4`。
 
 ## 5. 创建可编辑工程并渲染
 
 ```bash
 python3 "$AVATAR_SKILL/scripts/prepare_edit.py" \
-  --video main.mp4 --timeline tl.json --output community-edit
+  --video main-redub.mp4 --timeline tl.json --output community-edit
 cd community-edit
 npm install --no-audit --no-fund
 bash scripts/render.sh ../finished.mp4
 ```
 
-使用 `main-redub.mp4` 可制作换声版；也可以在准备工程时加 `--voice 已对齐音轨.wav`、`--music 已授权音乐.mp3` 或 `--stickers 贴纸.json`。贴纸数组格式见[贴纸示例](../examples/stickers.json)，秒数按实际视频填写。默认没有额外配音、音乐、贴纸、广告文案或白闪，画布取源视频尺寸并保持完整画面。`render.sh` 默认单线程，已有输出不会覆盖；渲染后仍需核查整条视频，而不是仅看静帧。若遇到渲染异常，可先用 `npx remotion studio` 检查。
+以上使用重配版 `main-redub.mp4` 和按新声音复核的 `tl.json`；也可以在准备工程时加 `--voice 已对齐音轨.wav`、`--music 已授权音乐.mp3` 或 `--stickers 贴纸.json`。贴纸数组格式见[贴纸示例](../examples/stickers.json)，秒数按实际视频填写。默认没有额外配音、音乐、贴纸、广告文案或白闪，画布取源视频尺寸并保持完整画面。`render.sh` 默认单线程，已有输出不会覆盖；渲染后仍需核查整条视频，而不是仅看静帧。若遇到渲染异常，可先用 `npx remotion studio` 检查。
