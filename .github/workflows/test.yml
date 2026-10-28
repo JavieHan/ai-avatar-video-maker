@@ -15,5 +15,7 @@ jobs:
           python-version: '3.11'
       - name: Install FFmpeg
         run: command -v ffmpeg >/dev/null || (sudo apt-get update && sudo apt-get install -y ffmpeg)
+      - name: FFmpeg version
+        run: ffmpeg -version | head -1
       - name: Run synthetic-media tests
         run: python -m unittest discover -s tests -v

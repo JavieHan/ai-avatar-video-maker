@@ -38,6 +38,8 @@ class TimedVoiceTest(unittest.TestCase):
         def energy(t):
             window = samples[int(t*48000):int((t+.1)*48000)]
             return sum(abs(v) for v in window)/max(1,len(window))
+        energies = [round(energy(x), 2) for x in (.2, .7, 1.2, 1.7, 2.2, 2.7)]
+        print('synthetic audio seconds:', len(samples)/48000, 'window energies:', energies)
         self.assertLess(energy(.2), 50)
         self.assertGreater(energy(.7), 1000)
         self.assertLess(energy(1.2), 50)
