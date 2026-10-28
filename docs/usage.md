@@ -101,4 +101,3 @@ bash scripts/render.sh ../finished.mp4
 ```
 
 使用 `main-redub.mp4` 可制作换声版；也可以在准备工程时加 `--voice 已对齐音轨.wav`、`--music 已授权音乐.mp3` 或 `--stickers 贴纸.json`。贴纸数组格式见[贴纸示例](../examples/stickers.json)，秒数按实际视频填写。默认没有额外配音、音乐、贴纸、广告文案或白闪，画布取源视频尺寸并保持完整画面。`render.sh` 默认单线程，已有输出不会覆盖；渲染后仍需核查整条视频，而不是仅看静帧。若遇到渲染异常，可先用 `npx remotion studio` 检查。
-
