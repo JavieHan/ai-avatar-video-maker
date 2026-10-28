@@ -8,7 +8,7 @@ import tempfile
 import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
-SCRIPT=ROOT/'skills/digital-human-koubo-muse/scripts/prepare_edit.py'
+SCRIPT=ROOT/'skills/ai-avatar-video-maker/scripts/prepare_edit.py'
 
 @unittest.skipUnless(shutil.which('ffmpeg') and shutil.which('ffprobe'),'ffmpeg/ffprobe required')
 class PrepareEditTests(unittest.TestCase):
@@ -58,7 +58,7 @@ class PrepareEditTests(unittest.TestCase):
     def test_render_script_refuses_existing_output(self):
         output=self.base/'existing.mp4'
         output.write_bytes(b'untouched')
-        render=ROOT/'skills/digital-human-koubo-muse/templates/huazi-916/scripts/render.sh'
+        render=ROOT/'skills/ai-avatar-video-maker/templates/huazi-916/scripts/render.sh'
         result=subprocess.run(['bash',str(render),str(output)],capture_output=True,text=True)
         self.assertNotEqual(result.returncode,0)
         self.assertEqual(output.read_bytes(),b'untouched')

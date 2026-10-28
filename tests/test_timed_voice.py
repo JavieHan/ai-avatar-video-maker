@@ -6,7 +6,7 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / 'skills/digital-human-koubo-muse/scripts/timed_voice.py'
+SCRIPT = ROOT / 'skills/ai-avatar-video-maker/scripts/timed_voice.py'
 
 
 class TimedVoiceTest(unittest.TestCase):

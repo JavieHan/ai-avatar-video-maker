@@ -7,7 +7,7 @@ import sys
 import tempfile
 import unittest
 
-SCRIPTS = Path(__file__).resolve().parents[1] / 'skills' / 'digital-human-koubo-muse' / 'scripts'
+SCRIPTS = Path(__file__).resolve().parents[1] / 'skills' / 'ai-avatar-video-maker' / 'scripts'
 sys.path.insert(0, str(SCRIPTS))
 from muse_common import file_hash, task_hash
 

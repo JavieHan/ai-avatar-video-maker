@@ -1,8 +1,10 @@
-# Digital Human Koubo · Muse 社区版
+# AI Avatar Video Maker
 
 [English](README.en.md) · 中文
 
 用自己的角色图与口播稿，在 Muse 中逐段生成视频；在本机选剪点、提取真实尾帧、检查台词并制作字幕、可选贴纸和可编辑视频工程。这个项目基于 [andyhuo520/digital-human-koubo](https://github.com/andyhuo520/digital-human-koubo) 的 MIT 代码改造。
+
+**来源声明：** 本项目复用了原作者的字幕时间轴、部分本地处理脚本和 Remotion 包装组件源码；Muse 尾帧接力、配音替换及社区基础工程经过新增或改造。具体清单见 [来源与改造](ATTRIBUTION.md)。
 
 **生成需要自行使用 Muse。** 本项目不提供或调用 Muse API/MCP，不代付、不自动提交生成请求；模型、单次时长、费用和额度以你的 Muse 界面显示为准。可以手动操作，也可以请有电脑操作能力的 Agent 协助。`build_tasks.py` 仅生成本地请求，不会生成视频或扣费。
 
@@ -25,9 +27,9 @@
 - 本机或其他渠道的 TTS 是**可选外部工具**。本项目不打包 TTS2，也不要求使用特定音色。
 
 ```bash
-git clone https://github.com/JavieHan/digital-human-koubo-muse.git
-cd digital-human-koubo-muse
-KOU_BO_SKILL="$PWD/skills/digital-human-koubo-muse"
+git clone https://github.com/JavieHan/ai-avatar-video-maker.git
+cd ai-avatar-video-maker
+AVATAR_SKILL="$PWD/skills/ai-avatar-video-maker"
 mkdir -p work/demo/downloads work/demo/kept
 cp examples/persona.json examples/script.json work/demo/
 cd work/demo
@@ -38,7 +40,7 @@ cd work/demo
 ## 1. 准备请求并生成第一段
 
 ```bash
-python3 "$KOU_BO_SKILL/scripts/build_tasks.py" script.json tasks-s1.json --persona persona.json
+python3 "$AVATAR_SKILL/scripts/build_tasks.py" script.json tasks-s1.json --persona persona.json
 ```
 
 打开 `tasks-s1.json`，把 `s1` 的 `prompt` 和 `reference_image` **实际作为图片附件**交给 Muse；文件路径文字本身不会上传图片。下载视频到 `downloads/s1.mp4`。每次提交前核对 Muse 的实际时长、额度和请求次数；首段审看通过后再继续。
@@ -48,7 +50,7 @@ python3 "$KOU_BO_SKILL/scripts/build_tasks.py" script.json tasks-s1.json --perso
 先看第一段结尾，选择一句说完、表情和机位适合衔接的位置；例如决定保留 6 秒：
 
 ```bash
-python3 "$KOU_BO_SKILL/scripts/handoff.py" \
+python3 "$AVATAR_SKILL/scripts/handoff.py" \
   --video downloads/s1.mp4 --keep-seconds 6 \
   --trimmed kept/s1.mp4 --tail kept/s1-tail.png \
   --tasks tasks-s1.json --next-id s2 --output-tasks tasks-s2.json
@@ -70,17 +72,17 @@ python3 "$KOU_BO_SKILL/scripts/handoff.py" \
 ```
 
 ```bash
-python3 "$KOU_BO_SKILL/scripts/import_muse.py" tasks-s2.json results.json clips.json
+python3 "$AVATAR_SKILL/scripts/import_muse.py" tasks-s2.json results.json clips.json
 ```
 
 导入只验证文件及音轨、记录哈希；它**不会**替你判断台词、人物或口型。逐段看听后，在 `clips.json` 中将符合要求的 `review_status` 改成 `approved`；有问题则保持 `pending` 或设为 `rejected`。改变已绑定图片的内容会使旧请求失效。
 
 ```bash
 export WHISPER_MODEL="<本机 Whisper 模型的完整路径>"
-python3 "$KOU_BO_SKILL/scripts/assemble.py" script.json clips.json \
+python3 "$AVATAR_SKILL/scripts/assemble.py" script.json clips.json \
   --tasks tasks-s2.json --out main.mp4 --cut-dir cut \
   --keep-frames s1=180
-python3 "$KOU_BO_SKILL/scripts/align.py" script.json --cut-dir cut --out tl.json
+python3 "$AVATAR_SKILL/scripts/align.py" script.json --cut-dir cut --out tl.json
 ```
 
 将 `s1=180` 改成接力工具实际打印的帧数；多段时为每个已用作参考的保留段分别加 `--keep-frames 段号=帧数`。此步骤可能重新编码，因此仍需比较成片接点。未指定帧数的段按 Whisper 估计的语音结束点裁尾，**不适用于已用于续接但未登记剪点的段**。
@@ -92,7 +94,7 @@ python3 "$KOU_BO_SKILL/scripts/align.py" script.json --cut-dir cut --out tl.json
 可以用 TTS2、其他 TTS 或自己录制的声音，**先把配音分成短句并人工确定各句的发声时间**。例如复制 `examples/voice-plan.json`，将每项的 `audio` 改成该文件旁的音频，`at` 改为视频中实际发声秒数；`rate` 是可选语速倍率（0.5–2）。示例时间仅为格式演示。
 
 ```bash
-python3 "$KOU_BO_SKILL/scripts/timed_voice.py" main.mp4 voice-plan.json --out main-redub.mp4
+python3 "$AVATAR_SKILL/scripts/timed_voice.py" main.mp4 voice-plan.json --out main-redub.mp4
 ```
 
 这一步保留视频画面、替换原音，不会自动识别或保证准确的口型同步，也不会自动保留原视频的背景声。时间重叠、超出片长或输出已存在时会停止。请听审，并根据实际新配音复核 `tl.json` 的时间；原音生成的字幕时间不一定适用于新声音。
@@ -100,7 +102,7 @@ python3 "$KOU_BO_SKILL/scripts/timed_voice.py" main.mp4 voice-plan.json --out ma
 ## 5. 创建可编辑工程并渲染
 
 ```bash
-python3 "$KOU_BO_SKILL/scripts/prepare_edit.py" \
+python3 "$AVATAR_SKILL/scripts/prepare_edit.py" \
   --video main.mp4 --timeline tl.json --output community-edit
 cd community-edit
 npm install --no-audit --no-fund
@@ -111,7 +113,7 @@ bash scripts/render.sh ../finished.mp4
 
 ## 可复用的 Agent Skill
 
-入口为 [`skills/digital-human-koubo-muse/SKILL.md`](skills/digital-human-koubo-muse/SKILL.md)。让能读取本地文件和使用电脑的 Agent 按此工作，或直接运行上面的命令。它不会自动安装为全局技能，也不保证各 Agent 都能操作 Muse 的界面。
+入口为 [`skills/ai-avatar-video-maker/SKILL.md`](skills/ai-avatar-video-maker/SKILL.md)。让能读取本地文件和使用电脑的 Agent 按此工作，或直接运行上面的命令。它不会自动安装为全局技能，也不保证各 Agent 都能操作 Muse 的界面。
 
 ## 许可与来源
 

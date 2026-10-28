@@ -5,7 +5,7 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPTS = ROOT / 'skills/digital-human-koubo-muse/scripts'
+SCRIPTS = ROOT / 'skills/ai-avatar-video-maker/scripts'
 
 
 def call(*args, cwd):

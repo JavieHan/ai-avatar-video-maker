@@ -1,8 +1,8 @@
-# Digital Human Koubo · Muse community edition
+# AI Avatar Video Maker
 
 A community adaptation of [andyhuo520/digital-human-koubo](https://github.com/andyhuo520/digital-human-koubo): plan short talking-head clips, use Muse through its actual interface, select a cut, extract the last frame, use it as the next image reference, and finish the result locally with Whisper and Remotion.
 
-[完整中文指南 / Full Chinese guide](README.md)
+[完整中文指南 / Full Chinese guide](README.md) · [Attribution and changes](ATTRIBUTION.md)
 
 **Scope:** This repository does not contain a Muse API, model weights, TTS2, account, demo presenter, or user media. Request preparation is offline; you or a computer-using agent must actually upload each image and generate/download each clip in Muse. Check your current Muse duration limits, capabilities, credit balance and prices before submitting. A tail image is a reference, not a guaranteed locked first frame. Later voice replacement does not drive lip movement.
 

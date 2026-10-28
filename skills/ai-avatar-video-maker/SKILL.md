@@ -1,5 +1,5 @@
 ---
-name: digital-human-koubo-muse
+name: ai-avatar-video-maker
 description: 使用用户现有的 Muse 与本地 FFmpeg、whisper-cli、Remotion 共同制作分段数字人口播；支持人工检查、剪后尾帧图片接力、可选本地配音替换和可编辑工程。
 ---
 # 数字人口播 · Muse 社区版
